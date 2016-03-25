@@ -1,0 +1,88 @@
+<html>
+<head>
+    <script src="{{ url_for('bower.static', filename='jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ url_for('bower.static', filename='jquery-knob/dist/jquery.knob.min.js') }}"></script>
+    <style>
+        button {
+            height:50px;
+            width:150px;
+            size: 30px;
+        }
+    </style>
+
+     <script>
+         speedValue = 50;
+
+         function stopIt(){
+             move(0,0)
+         }
+
+         function shutDown(){
+             $.get("http://192.168.1.9:5002/stop/")
+         }
+
+         function move(R,L){
+            console.log("Moving for: " + R + " " + L )
+             $.get("http://192.168.1.9:5002/move/" + R + "/" + L + "/")
+             console.log("http://192.168.1.9:5002/move/" + R + "/" + L + "/")
+         }
+
+         function speedUp(){
+             speedValue += 10;
+         }
+
+         function speedDown(){
+             speedValue -= 10;
+         }
+
+        $(function($) {
+
+            $(".knob").knob({
+                change: function (value) {
+                    //console.log("change : " + value);
+                },
+                release: function (value) {
+
+                    //console.log(this.$.attr('value'));
+                    console.log("release : " + value);
+                    switch(value){
+                        case 0:
+                        case 20:
+                            move(speedValue,speedValue);
+                            break;
+                        case 5:
+                            move(0, speedValue);
+                            break;
+                        case 10:
+                            move(-1 * speedValue, -1 * speedValue);
+                            break;
+                        case 15:
+                            move(speedValue, 0);
+                            break;
+                        default:
+                            move(0,0);
+                            break;
+                    }
+
+                },
+                cancel: function () {
+                    console.log("cancel : ", this);
+                }
+            });
+        });
+
+        </script>
+
+</head>
+
+<body>
+    <input class="knob" data-width="300" data-min="0" data-max="20" data-height="300" data-cursor=true  data-displayInput=false data-thickness=".5" value="35">
+    <br>
+    <button onclick="stopIt()">STOP</button>
+    <button onclick="shutDown()">Shut Down</button>
+    <br>
+    <button onclick="speedUp()">Speed UP</button>
+    <button onclick="speedDown()">Speed Down</button>
+
+</body>
+</html>

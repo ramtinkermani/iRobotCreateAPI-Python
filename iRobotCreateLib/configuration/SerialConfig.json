@@ -1,0 +1,4 @@
+{
+  "SerialPortAddress": "/dev/ttyUSB0",
+  "BaudRate": "115200"
+}
