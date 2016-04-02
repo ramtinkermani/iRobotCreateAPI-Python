@@ -2,7 +2,7 @@ class IRobotCreateError(Exception):
     def __init__(self, errorCode = 0, errorMsg = ""):
         self.errorCode = errorCode
         self.errorMsg = errorMsg
-        super()
+        # self.super()
 
 class ErrorCode():
     SerialPortNotFound = 1

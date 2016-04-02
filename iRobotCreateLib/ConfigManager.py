@@ -7,7 +7,8 @@ class ConfigManager:
     @staticmethod
     def __readConfig():
         try:
-            fp = open("configuration/SerialConfig.json", "r")
+            # TODO: Change the follwoing to a relative path. Temporary fix.
+            fp = open("/home/pi/workspace/PyCharmRemote/iRobotCreateLib/configuration/SerialConfig.json", "r")
             jsonString = fp.read()
             serialConfig = json.loads(jsonString)
 
@@ -15,13 +16,14 @@ class ConfigManager:
             ConfigManager.configuration["BaudRate"] = serialConfig["BaudRate"]
 
             fp.close()
-        except FileNotFoundError as ex:
-            raise IRobotCreateError(ErrorCode.ConfigurationFileMissing, ex.strerror)
-        except IOError as ex:
-            if ex.errno == IOError.errno.EACCESS:
-                raise IRobotCreateError(ErrorCode.ConfigFileError, "Configuration file not found: " + ex.strerror)
-            if ex.errno == 13:
-                raise IRobotCreateError(ErrorCode.ConfigFileError, "You don't have permission to access the configuration file" + ex.strerror)
+        # TEMPORARILY DISABLING THIS TILL WE UPGRADETP PYTHON 3
+        # except FileNotFoundError as ex:
+        #     raise IRobotCreateError(ErrorCode.ConfigurationFileMissing, ex.strerror)
+        # except IOError as ex:
+        #     if ex.errno == IOError.errno.EACCESS:
+        #         raise IRobotCreateError(ErrorCode.ConfigFileError, "Configuration file not found: " + ex.strerror)
+        #     if ex.errno == 13:
+        #         raise IRobotCreateError(ErrorCode.ConfigFileError, "You don't have permission to access the configuration file" + ex.strerror)
         except ValueError as ex:
             raise IRobotCreateError(ErrorCode.ConfigFileCorrupted, "Configuration file may be corrupted.: " + ex.strerror)
 

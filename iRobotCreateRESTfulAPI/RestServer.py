@@ -2,7 +2,9 @@
 
 from flask import Flask, render_template
 from flask.ext.bower import Bower
-from iRobotCreateLib.OpenInterfaceLibrary import IRobotCreate
+import sys
+sys.path.insert(0,"../../")
+from PyCharmRemote.iRobotCreateLib.OpenInterfaceLibrary import IRobotCreate
 
 app = Flask(__name__)
 Bower(app)
@@ -17,7 +19,8 @@ def control():
 
 @app.route("/move/<speedRight>/<speedLeft>/")
 def move(speedRight, speedLeft):
-    drive(speedRight,speedLeft)
+    print("Values are : ", str(speedRight), " :: ", str(speedLeft))
+    myRobot.drive(int(speedRight),int(speedLeft))
     return "Success"
 
 @app.route("/stop/")
@@ -30,9 +33,7 @@ if __name__ == '__main__':
         myRobot = IRobotCreate()
         myRobot.start()
         myRobot.fullMode()
-        myRobot.drive(30, 30)
-
-
+        # myRobot.drive(30, 30)
 
         app.run(host="0.0.0.0", port=5002, debug=True)
     except Exception as ex:

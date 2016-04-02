@@ -91,6 +91,7 @@ class IRobotCreate():
 
     def drive(self, rightWheelSpeed, leftWheelSpeed):
         if rightWheelSpeed > 500 or rightWheelSpeed < -500 or leftWheelSpeed > 500 or leftWheelSpeed < -500:
+            print("Values are : ", rightWheelSpeed, " , ", leftWheelSpeed)
             raise IRobotCreateError(ErrorCode.ValueOutOfRange)
         try:
             speedRightValue = self.__getBytes(int(rightWheelSpeed))
@@ -188,7 +189,7 @@ def main():
         # myRobot.drawSquare(3)
 
         # time.sleep(2)
-        myRobot.drive(30,30)
+        myRobot.drive(0,0)
         time.sleep(2)
         myRobot.drive(0,0)
         # #myRobot.digitLedAscii(54, 55, 56, 57)           ### 3<--- HERE

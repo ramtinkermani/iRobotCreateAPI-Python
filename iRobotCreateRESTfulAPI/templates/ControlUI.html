@@ -84,5 +84,71 @@
     <button onclick="speedUp()">Speed UP</button>
     <button onclick="speedDown()">Speed Down</button>
 
+
+
+<script>
+var now = Date.now()
+
+function deviceOrientationListener(event) {
+//    document.writeln(event.beta)
+    if(event.gamma <= 0)
+    {
+        speedValue = 90 + Math.floor(event.gamma)
+    }
+    else
+    {
+        speedValue = -1 * (90 + Math.floor(event.gamma))
+    }
+    if(Date.now() - now > 200) {
+        $("#betaValue").text(event.beta);
+        $("#gammaValue").text(event.gamma);
+        var turnFactor = Math.floor(Math.abs(event.beta))
+        if (event.beta >= 0)
+            move(speedValue - turnFactor, speedValue + turnFactor)
+        else
+            move(speedValue + turnFactor, speedValue - turnFactor)
+    now = Date.now()
+    }
+}
+
+if (window.DeviceOrientationEvent) {
+
+   window.addEventListener("deviceorientation", deviceOrientationListener);
+}
+else {
+    alert("Sorry, your browser doesn't support Device Orientation");
+}
+
+
+</script>
+Beta is:
+<div id="betaValue"> </div>
+Gamma is:
+<div id="gammaValue"> </div>
+
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
